@@ -3,6 +3,16 @@
 
 {% block content %}
 <h1>Welcome to cosmetic shop</h1>
+<div>
+    {% for item in items %}
+    <div>
+        {{item.pic}}
+
+    </div>
+
+    {% endfor %}
+
+</div>
 
 
 {% endblock content %}
