@@ -22,6 +22,7 @@
             Shop
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'shop' %}">All product</a></li>
             <li><a class="dropdown-item" href="#">Face</a></li>
             <li><a class="dropdown-item" href="#">Hair</a></li>
             <li><a class="dropdown-item" href="#">Body</a></li>
@@ -32,6 +33,15 @@
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
+
+      <div class="form-inline my-2 my-lg-0">
+        <a href="##" class="btn btn-warning">Log in</a>
+      </div>
+
+      <a href="{% url 'cart' %}">
+        <img  id="cart-icon" src="{% static 'blog/image/cart.png' %}" alt=" image not found">
+      </a>
+      <p id="cart-total">{{order.get_cart_items}}</p>
     </div>
   </div>
 </nav>

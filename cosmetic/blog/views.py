@@ -1,17 +1,11 @@
-from .models import Item
 from django.shortcuts import render
-
-from blog.models import Item
+from .models import *
 
 # Create your views here.
 
 def home(request):
-
-    q =  request.GET.get('q') if request.GET.get('q') != None else''
-
-    items = Item.objects.all()
-
-    context = {'items' : items }
+    products = Product.objects.all()
+    context = {'products': products}
 
     return render(request, 'blog/home.html', context)
 
@@ -22,14 +16,33 @@ def contact(request):
     return render(request, 'blog/contact.html')
 
 def shop(request):
-    context = {}
+    products = Product.objects.all()
+    context = {'products': products}
     return render (request, 'blog/shop.html', context)
 
 def cart(request):
-    context = {}
+
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        items = []
+        order = {'get_cart_total':0 , 'get_cart_items':0}
+
+    context = {'items':items, 'order':order}
     return render (request, 'blog/cart.html', context )
 
 def checkout(request):
-    context ={}
+
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        items = []
+        order = {'get_cart_total':0 , 'get_cart_items':0}
+
+    context = {'items':items, 'order':order}
     return render (request, 'blog/checkout.html', context)
     
